@@ -17,47 +17,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prueba_fabrica.dao.ClienteDAO;
+import com.prueba_fabrica.dao.JuegosDAO;
 import com.prueba_fabrica.model.Cliente;
+import com.prueba_fabrica.model.Juegos;
 
 @RestController
-@RequestMapping(path = "/clientes", method = RequestMethod.POST)
-public class Controler_cliente {
+@RequestMapping(path = "/juegosAlquilados", method = RequestMethod.POST)
+public class Controller_juegos {
 
 	@Autowired
-	private ClienteDAO clienteDao;
-
-	@GetMapping(path = "/listarClientes")
-	public @ResponseBody List<Cliente> listar() {
-		return clienteDao.findAll();
-	}
-
-	@PostMapping(path = "/resgistarCliente")
-	public Map<String, Object> registar(@RequestBody Cliente cliente, Model model) {
-		
-		try {
-			Cliente c = new Cliente(cliente.getNombre(),cliente.getTelefono(),cliente.getCorreo());
-			clienteDao.save(c);
-			return respuesta(true, "se regristo el cliente", null);
-		} catch (Exception e) {
-			return respuesta(true, "No se pudo registar el cliente " +e.getMessage(), null);
-		}
-	}
+	private JuegosDAO juegosDao;
 	
-	@GetMapping(path ="/{id}")
-	public Map<String,Object> buscarCliente(@PathVariable Integer id){
-		Optional<Cliente> cliente = clienteDao.findById(id);
-		
+	@GetMapping(path = "/Listarjuegos")
+	public @ResponseBody List<Juegos> buscarJuegos() {
+		return juegosDao.findAll();
+	}
+
+	@PostMapping(path = "/agregarJuego")
+	public Map<String, Object> agregarJuego(@RequestBody Juegos juego, Model model) {
 		try {
-			if(cliente.isPresent()) {
-				Cliente c = cliente.get();
-				return respuesta(true, "Cliente encontrado", c);
-			}else {
-				return respuesta(true, "Cliente no encontrado", null);
-			}
-		}catch(Exception e) {
-			return respuesta(true, "Cliente no encontrado "+e.getMessage(), null);
+			Juegos j = new Juegos(juego.getTitulo(), juego.getProtagonista(), juego.getDirector(),
+					juego.getProductor(), juego.getTecnologia(), juego.getYear());
+			juegosDao.save(j);
+			return respuesta(true, "Registro exitoso", null);
+		} catch (Exception e) {
+			return respuesta(true, "No se pudo registar el juego " + e.getMessage(), null);
 		}
-		
 	}
 
 	public static Map<String, Object> respuesta(boolean status, String msg, Object data) {
