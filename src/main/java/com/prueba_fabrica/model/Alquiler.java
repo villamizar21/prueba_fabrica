@@ -42,6 +42,8 @@ public class Alquiler {
 		this.juegos = juegos;
 		this.total = total;
 	}
+	
+	
 
 	public Alquiler() {
 		super();

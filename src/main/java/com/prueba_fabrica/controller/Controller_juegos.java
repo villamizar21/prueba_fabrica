@@ -22,11 +22,11 @@ import com.prueba_fabrica.model.Juegos;
 public class Controller_juegos {
 
 	@Autowired
-	private Juegos_interface juegosDao;
+	private Juegos_interface Ijuegos;
 	
 	@GetMapping(path = "/Listarjuegos")
 	public @ResponseBody List<Juegos> buscarJuegos() { 
-		return juegosDao.findAll();
+		return Ijuegos.findAll();
 	}
 
 	@PostMapping(path = "/agregarJuego")
@@ -34,7 +34,7 @@ public class Controller_juegos {
 		try {
 			Juegos j = new Juegos(juego.getTitulo(), juego.getProtagonista(), juego.getDirector(),
 					juego.getProductor(), juego.getTecnologia(), juego.getYear());
-			juegosDao.save(j);
+			Ijuegos.save(j);
 			return respuesta(true, "Registro exitoso", "OK");
 		} catch (Exception e) {
 			return respuesta(true, "No se pudo registar el juego " + e.getMessage(), null);

@@ -27,34 +27,29 @@ import com.prueba_fabrica.model.Juegos;
 public class Controller_Alquiler {
 
 	@Autowired
-	private Alquiler_interface alquilerDao;
+	private Alquiler_interface Ialquiler;
 	@Autowired
-	private Cliente_interface cliente;
+	private Cliente_interface Icliente;
 	@Autowired
-	private Juegos_interface juego;
+	private Juegos_interface Ijuego;
+
 	
-	private List<Cliente> cli;
-	
-	@GetMapping(path ="/mostrarAlquileres")
-	public @ResponseBody List<Alquiler> mostrarAlquileres(){
-		return alquilerDao.findAll();
+	@GetMapping(path = "/mostrarAlquileres")
+	public @ResponseBody List<Alquiler> mostrarAlquileres() {
+		return Ialquiler.findAll();
 	}
+
+/*	@PostMapping(path = "/nuevoAlquiler/{id}")
+	public Map<String, Object> registarAlquiler(@RequestBody Alquiler alquiler, Model model, @PathVariable Integer id) {
+
+		Optional<Cliente> clie = Icliente.findById(id);
+		Alquiler al = new Alquiler(alquiler.getFecha_inicio(), alquiler.getFecha_entrega(), alquiler.getCliente(),
+				alquiler.getJuegos(), alquiler.getTotal());
 	
-	@PostMapping(path = "/nuevoAlquiler/{id}")
-	public Map<String,Object> registarAlquiler(@RequestBody Alquiler alquiler, Model model,@PathVariable Integer id){
-	
-			Optional<Cliente> clie = cliente.findById(id);
-			Alquiler al = new Alquiler(alquiler.getFecha_inicio(),alquiler.getFecha_entrega(),alquiler.getCliente(),alquiler.getJuegos(),alquiler.getTotal());
-			if(clie.isPresent()) {
-				alquilerDao.save(al);
-				return respuesta(true," exite el avto",null);
-				
-			}else return respuesta(true,"no exite el avto",null);
-			
-			
-		}
-		
-	
+			return respuesta(true, "", null);
+
+	}*/
+
 	public static Map<String, Object> respuesta(boolean status, String msg, Object data) {
 		Map<String, Object> respuesta = new HashMap<>();
 		respuesta.put("msg", msg);
