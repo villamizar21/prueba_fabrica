@@ -31,14 +31,16 @@ public class Cliente {
 	}
 
 
-	public int getCleinte_id() {
+	public Integer getCliente_id() {
 		return cliente_id;
 	}
 
-	public void setCleinte_id(Integer cleinte_id) {
-		this.cliente_id = cleinte_id;
+
+	public void setCliente_id(Integer cliente_id) {
+		this.cliente_id = cliente_id;
 	}
-	
+
+
 	public String getNombre() {
 		return nombre;
 	}

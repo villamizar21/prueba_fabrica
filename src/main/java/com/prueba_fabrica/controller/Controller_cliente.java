@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.prueba_fabrica.dao.ClienteDAO;
+import com.prueba_fabrica.interfaces.Cliente_interface;
 import com.prueba_fabrica.model.Cliente;
 
 @RestController
@@ -24,11 +24,11 @@ import com.prueba_fabrica.model.Cliente;
 public class Controller_cliente {
 
 	@Autowired
-	private ClienteDAO clienteDao;
+	private Cliente_interface clienteinter;
 
 	@GetMapping(path = "/listarClientes")
 	public @ResponseBody List<Cliente> listar() {
-		return clienteDao.findAll();
+		return clienteinter.findAll();
 	}
 
 	@PostMapping(path = "/resgistarCliente")
@@ -36,7 +36,7 @@ public class Controller_cliente {
 		
 		try {
 			Cliente c = new Cliente(cliente.getNombre(),cliente.getTelefono(),cliente.getCorreo());
-			clienteDao.save(c);
+			clienteinter.save(c);
 			return respuesta(true, "se regristo el cliente", null);
 		} catch (Exception e) {
 			return respuesta(true, "No se pudo registar el cliente " +e.getMessage(), null);
@@ -45,7 +45,7 @@ public class Controller_cliente {
 	
 	@GetMapping(path ="/{id}")
 	public Map<String,Object> buscarCliente(@PathVariable Integer id){
-		Optional<Cliente> cliente = clienteDao.findById(id);
+		Optional<Cliente> cliente = clienteinter.findById(id);
 		
 		try {
 			if(cliente.isPresent()) {
